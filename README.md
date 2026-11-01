@@ -10,24 +10,24 @@ Next.js 16 · React 19 · Tailwind v4 · Recharts · Zustand · Supabase.
 
 ## What it does
 
-- **One number for everything you own:** cash, bank, brokerage, crypto and
+- **One number for everything you own.** Cash, bank, brokerage, crypto and
   anything else, each in its own currency, converted with live FX.
-- **Syncs on its own:** Revolut through Open Banking, Freedom24 positions through
+- **Syncs on its own.** Revolut through Open Banking, Freedom24 positions through
   the broker API, and watch-only wallets read straight from public chain RPCs on
   Bitcoin, Solana and eight EVM chains. No keys that can move money.
-- **Card statements:** drop the PDF a card app exports and it becomes a ledger.
-- **Spending:** imported transactions are categorised by merchant rules you can
+- **Card statements.** Drop the PDF a card app exports and it becomes a ledger.
+- **Spending.** Imported transactions are categorised by merchant rules you can
   extend, with hand edits always winning.
-- **Wallet map:** a force-directed map of who your wallets paid and got paid by,
+- **Wallet map.** A force-directed map of who your wallets paid and got paid by,
   with address-poisoning lookalikes flagged.
-- **Private by default:** a passkey login, a one-tap "bare mode" that hides
+- **Private by default.** A passkey login, a one-tap "bare mode" that hides
   every figure, and several skins for the same data.
 
 ## Single-user by design: run your own copy
 
 There is **no multi-user support**. One deployment holds exactly one person's
 finances in one Supabase row, behind one owner login (passkeys plus a
-password). Do not point two people at the same deployment: they would both
+password). Do not point two people at the same deployment, because they would both
 read and write the same data.
 
 To use it, deploy your own instance with your own Supabase project. Your data
@@ -57,7 +57,7 @@ cp .env.example .env.local
 Fill in at minimum `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_USER`,
 `ADMIN_PASSWORD` and `AUTH_SECRET` (`openssl rand -base64 48`). Every variable
 is documented in `.env.example`. Without the three login variables the app
-fails closed: every route answers 401.
+fails closed, and every route answers 401.
 
 If the Supabase variables are missing, `/api/state` and `/api/snapshots`
 return 502; the build itself no longer needs them.
@@ -129,10 +129,10 @@ npm only. There is no test runner configured.
 
 ## Architecture
 
-- **State:** the whole app state is one JSON row in Supabase (`app_state`) behind
+- **State.** The whole app state is one JSON row in Supabase (`app_state`) behind
   `/api/state`, cached in localStorage. Writes carry a state version, so a tab
   running an older build cannot overwrite a newer save.
-- **Money:** every asset keeps its own currency and is converted to the base
+- **Money.** Every asset keeps its own currency and is converted to the base
   currency with live FX (proxied through `/api/fx`).
-- **History:** one snapshot per calendar day (`networth_snapshots`), written by
+- **History.** One snapshot per calendar day (`networth_snapshots`), written by
   the open app or by the nightly cron.
